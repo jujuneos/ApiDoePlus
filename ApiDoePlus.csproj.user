@@ -3,5 +3,10 @@
   <PropertyGroup>
     <Controller_SelectedScaffolderID>ApiControllerEmptyScaffolder</Controller_SelectedScaffolderID>
     <Controller_SelectedScaffolderCategoryPath>root/Common/Api</Controller_SelectedScaffolderCategoryPath>
+    <NameOfLastUsedPublishProfile>C:\Users\lccjunior\Downloads\ApiDoePlus\ApiDoePlus\ApiDoePlus\Properties\PublishProfiles\ApiDoePlus - Web Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <ActiveDebugProfile>ApiDoePlus</ActiveDebugProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebuggerFlavor>ProjectDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>

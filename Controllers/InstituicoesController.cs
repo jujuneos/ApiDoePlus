@@ -1,6 +1,6 @@
 ﻿using ApiDoePlus.Context;
-using ApiDoePlus.Models.Instituicoes;
-using Microsoft.AspNetCore.Http;
+using ApiDoePlus.Models.Autenticacao;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,39 +18,29 @@ public class InstituicoesController : ControllerBase
     }
 
     [HttpGet]
-    public ActionResult<IEnumerable<Instituicao>> Get()
+    public ActionResult<IEnumerable<ApplicationUser>> GetInstituicoes()
     {
-        var instituicoes = _context.Instituicoes.ToList();
+        var instituicoes = _context.Users.Where(u => u.Tipo != null).ToList();
         if (!instituicoes.Any())
             return NotFound("Nenhuma instituição cadastrada.");
         return instituicoes;
     }
 
-    [HttpGet("{id:int}")]
-    public ActionResult<Instituicao> Get(int id)
+    [HttpGet("{tipo}")]
+    public ActionResult<IEnumerable<ApplicationUser>> GetPorTipo(string tipo)
     {
-        var instituicao = _context.Instituicoes.FirstOrDefault(x => x.InstituicaoId == id);
-        if (instituicao == null)
-            return NotFound();
-        return instituicao;
-    }
+        var instituicoes = _context.Users.Where(x => x.Tipo != null && x.Tipo.Equals(tipo)).ToList();
 
-    [HttpPost]
-    public ActionResult Post(Instituicao instituicao)
-    {
-        if (instituicao == null)
-            return BadRequest();
-
-        _context.Instituicoes.Add(instituicao);
-        _context.SaveChanges();
-
-        return new CreatedAtRouteResult("Obter instituição", new { instituicao.InstituicaoId }, instituicao);
+        if (!instituicoes.Any())
+            return NotFound("Nenhuma instituição desse tipo encontrada.");
+        return instituicoes;
     }
 
     [HttpPut("{id:int}")]
-    public ActionResult Put(int id, Instituicao instituicao)
+    [Authorize]
+    public ActionResult Put(int id, ApplicationUser instituicao)
     {
-        if (id != instituicao.InstituicaoId)
+        if (!id.Equals(instituicao.Id))
             return BadRequest();
 
         _context.Entry(instituicao).State = EntityState.Modified;
@@ -59,4 +49,18 @@ public class InstituicoesController : ControllerBase
         return Ok(instituicao);
     }
 
+    [HttpDelete("{id:int}")]
+    [Authorize]
+    public ActionResult Delete(int id)
+    {
+        var instituicao = _context.Users.FirstOrDefault(i => i.Id.Equals(id));
+
+        if (instituicao == null)
+            return NotFound("Instituição não localizada.");
+
+        _context.Users.Remove(instituicao);
+        _context.SaveChanges();
+
+        return Ok(instituicao);
+    }
 }

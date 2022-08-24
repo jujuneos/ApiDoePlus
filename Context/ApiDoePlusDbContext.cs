@@ -1,15 +1,12 @@
-﻿using ApiDoePlus.Models.Instituicoes;
-using ApiDoePlus.Models.Usuarios;
+﻿using ApiDoePlus.Models.Autenticacao;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ApiDoePlus.Context;
 
-public class ApiDoePlusDbContext : DbContext
+public class ApiDoePlusDbContext : IdentityDbContext<ApplicationUser>
 {
     public ApiDoePlusDbContext(DbContextOptions<ApiDoePlusDbContext> options) : base(options)
     {
     }
-
-    public DbSet<Instituicao>? Instituicoes { get; set; }
-    public DbSet<Usuario>? Usuarios { get; set; }
 }
