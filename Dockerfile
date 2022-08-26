@@ -8,8 +8,8 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
 WORKDIR /src
-COPY ["ApiDoePlus/ApiDoePlus.csproj", "ApiDoePlus/"]
-RUN dotnet restore "ApiDoePlus/ApiDoePlus.csproj"
+COPY ["ApiDoePlus.csproj", "ApiDoePlus/"]
+#RUN dotnet restore "ApiDoePlus.csproj"
 COPY . .
 WORKDIR "/src/ApiDoePlus"
 RUN dotnet build "ApiDoePlus.csproj" -c Release -o /app/build
