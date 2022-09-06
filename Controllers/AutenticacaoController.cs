@@ -59,7 +59,10 @@ public class AutenticacaoController : ControllerBase
             Banco = model.Banco,
             Agencia = model.Agencia,
             Conta = model.Conta,
-            PicPay = model.PicPay
+            PicPay = model.PicPay,
+            Latitude = model.Latitude,
+            Longitude = model.Longitude,
+            Foto = model.Foto
         };
 
         var result = await _userManager.CreateAsync(ong, model.Senha);
