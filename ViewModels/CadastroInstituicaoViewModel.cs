@@ -1,4 +1,7 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ApiDoePlus.Models;
+using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ApiDoePlus.ViewModels;
 
@@ -15,7 +18,6 @@ public class CadastroInstituicaoViewModel
     public string? Tipo { get; set; }
     [StringLength(500)]
     public string? Descricao { get; set; }
-    public string? Foto { get; set; }
     [StringLength(15)]
     public string? Telefone { get; set; }
     [Required]
@@ -33,5 +35,8 @@ public class CadastroInstituicaoViewModel
     public string? Conta { get; set; }
     [StringLength(100)]
     public string? PicPay { get; set; }
+
+    public List<Foto> Fotos { get; set; }
+    public IFormFileCollection Files { get; set; }
 }
 

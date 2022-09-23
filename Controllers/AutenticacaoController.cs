@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using ApiDoePlus.Models;
 
 namespace ApiDoePlus.Controllers;
 
@@ -61,9 +62,42 @@ public class AutenticacaoController : ControllerBase
             Conta = model.Conta,
             PicPay = model.PicPay,
             Latitude = model.Latitude,
-            Longitude = model.Longitude,
-            Foto = model.Foto
+            Longitude = model.Longitude
         };
+
+        List<Foto> photoList = new List<Foto>();
+
+        if (model.Files.Count > 0)
+        {
+            foreach (var file in model.Files)
+            {
+                if (file.Length > 0)
+                {
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await file.CopyToAsync(memoryStream);
+                        if (memoryStream.Length < 2097152)
+                        {
+                            var foto = new Foto()
+                            {
+                                Bytes = memoryStream.ToArray(),
+                                Descricao = file.FileName,
+                                FileExtension = Path.GetExtension(file.FileName),
+                                Size = file.Length
+                            };
+
+                            photoList.Add(foto);
+                        }
+                        else
+                        {
+                            ModelState.AddModelError("File", "O arquivo é muito grande.");
+                        }
+                    }
+                }
+            }
+        }
+
+        model.Fotos = photoList;
 
         var result = await _userManager.CreateAsync(ong, model.Senha);
 

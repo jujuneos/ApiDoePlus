@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text.Json.Serialization;
 
 namespace ApiDoePlus.Models.Autenticacao;
@@ -9,7 +11,6 @@ public class ApplicationUser : IdentityUser
     public string? Tipo { get; set; }
     [StringLength(500)]
     public string? Descricao { get; set; }
-    public string? Foto { get; set; }
     [StringLength(500)]
     public string? Endereco { get; set; }
     public double Latitude { get; set; }
@@ -29,4 +30,10 @@ public class ApplicationUser : IdentityUser
 
     [JsonIgnore]
     public virtual ICollection<ApplicationUser>? InstituicoesFavoritas { get; set; }
+
+    public List<Foto> Fotos { get; set; }
+
+    [FromForm]
+    [NotMapped]
+    public IFormFileCollection Files { get; set; }
 }
