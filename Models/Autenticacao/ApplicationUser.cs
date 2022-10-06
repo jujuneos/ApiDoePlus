@@ -30,10 +30,4 @@ public class ApplicationUser : IdentityUser
 
     [JsonIgnore]
     public virtual ICollection<ApplicationUser>? InstituicoesFavoritas { get; set; }
-
-    public List<Foto> Fotos { get; set; }
-
-    [FromForm]
-    [NotMapped]
-    public IFormFileCollection Files { get; set; }
 }

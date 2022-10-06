@@ -21,6 +21,9 @@ public class Program
         builder.Services.AddDbContext<ApiDoePlusDbContext>(options =>
             options.UseNpgsql(connection));
 
+        builder.Services.AddDbContext<FotosContext>(options =>
+            options.UseNpgsql(connection));
+
         // Add services to the container.
         builder.Services.AddControllers()
             .AddJsonOptions(options =>

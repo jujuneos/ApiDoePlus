@@ -131,40 +131,6 @@ namespace ApiDoePlus.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
-            modelBuilder.Entity("ApiDoePlus.Models.Foto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<byte[]>("Bytes")
-                        .IsRequired()
-                        .HasColumnType("bytea");
-
-                    b.Property<string>("Descricao")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("FileExtension")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<string>("InstituicaoId")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.Property<decimal>("Size")
-                        .HasColumnType("numeric");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("InstituicaoId");
-
-                    b.ToTable("Foto");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -304,17 +270,6 @@ namespace ApiDoePlus.Migrations
                         .HasForeignKey("ApplicationUserId");
                 });
 
-            modelBuilder.Entity("ApiDoePlus.Models.Foto", b =>
-                {
-                    b.HasOne("ApiDoePlus.Models.Autenticacao.ApplicationUser", "Instituicao")
-                        .WithMany("Fotos")
-                        .HasForeignKey("InstituicaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Instituicao");
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -368,8 +323,6 @@ namespace ApiDoePlus.Migrations
 
             modelBuilder.Entity("ApiDoePlus.Models.Autenticacao.ApplicationUser", b =>
                 {
-                    b.Navigation("Fotos");
-
                     b.Navigation("InstituicoesFavoritas");
                 });
 #pragma warning restore 612, 618

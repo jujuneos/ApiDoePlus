@@ -172,29 +172,6 @@ namespace ApiDoePlus.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "Foto",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Bytes = table.Column<byte[]>(type: "bytea", nullable: false),
-                    Descricao = table.Column<string>(type: "text", nullable: false),
-                    FileExtension = table.Column<string>(type: "text", nullable: false),
-                    Size = table.Column<decimal>(type: "numeric", nullable: false),
-                    InstituicaoId = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Foto", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Foto_AspNetUsers_InstituicaoId",
-                        column: x => x.InstituicaoId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
                 table: "AspNetRoleClaims",
@@ -236,11 +213,6 @@ namespace ApiDoePlus.Migrations
                 table: "AspNetUsers",
                 column: "NormalizedUserName",
                 unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Foto_InstituicaoId",
-                table: "Foto",
-                column: "InstituicaoId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -259,9 +231,6 @@ namespace ApiDoePlus.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "Foto");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
