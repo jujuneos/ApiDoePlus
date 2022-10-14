@@ -26,7 +26,7 @@ public class ApplicationUser : IdentityUser
     [StringLength(100)]
     public string? PicPay { get; set; }
 
-    public float? Avaliacao { get; set; }
+    public double Avaliacao { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<ApplicationUser>? InstituicoesFavoritas { get; set; }

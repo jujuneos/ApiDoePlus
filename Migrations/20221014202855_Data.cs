@@ -39,7 +39,7 @@ namespace ApiDoePlus.Migrations
                     Agencia = table.Column<string>(type: "character varying(5)", maxLength: 5, nullable: true),
                     Conta = table.Column<string>(type: "character varying(10)", maxLength: 10, nullable: true),
                     PicPay = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: true),
-                    Avaliacao = table.Column<float>(type: "real", nullable: true),
+                    Avaliacao = table.Column<double>(type: "double precision", nullable: false),
                     ApplicationUserId = table.Column<string>(type: "text", nullable: true),
                     UserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),
                     NormalizedUserName = table.Column<string>(type: "character varying(256)", maxLength: 256, nullable: true),

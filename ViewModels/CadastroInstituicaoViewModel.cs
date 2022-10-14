@@ -36,6 +36,8 @@ public class CadastroInstituicaoViewModel
     [StringLength(100)]
     public string? PicPay { get; set; }
 
+    public double Avaliacao { get; set; }
+
     [FromForm(Name = "fotos")]
     public List<IFormFile> Files { get; set; }
 }

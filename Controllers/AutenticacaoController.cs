@@ -67,7 +67,8 @@ public class AutenticacaoController : ControllerBase
             Conta = model.Conta,
             PicPay = model.PicPay,
             Latitude = model.Latitude,
-            Longitude = model.Longitude
+            Longitude = model.Longitude,
+            Avaliacao = model.Avaliacao
         };
 
         var result = await _userManager.CreateAsync(ong, model.Senha);

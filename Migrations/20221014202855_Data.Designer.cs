@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiDoePlus.Migrations
 {
     [DbContext(typeof(ApiDoePlusDbContext))]
-    [Migration("20221006201723_Data")]
+    [Migration("20221014202855_Data")]
     partial class Data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,8 +39,8 @@ namespace ApiDoePlus.Migrations
                     b.Property<string>("ApplicationUserId")
                         .HasColumnType("text");
 
-                    b.Property<float?>("Avaliacao")
-                        .HasColumnType("real");
+                    b.Property<double>("Avaliacao")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Banco")
                         .HasMaxLength(50)
