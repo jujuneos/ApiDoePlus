@@ -11,10 +11,12 @@ namespace ApiDoePlus.Controllers;
 public class InstituicoesController : ControllerBase
 {
     private readonly ApiDoePlusDbContext _context;
+    private readonly FotosContext _fotosContext;
 
-    public InstituicoesController(ApiDoePlusDbContext context)
+    public InstituicoesController(ApiDoePlusDbContext context, FotosContext fotosContext)
     {
         _context = context;
+        _fotosContext = fotosContext;
     }
 
     [HttpGet]
@@ -36,7 +38,27 @@ public class InstituicoesController : ControllerBase
         return instituicoes;
     }
 
-    [HttpPut("{id:int}")]
+    [HttpGet("Foto/{id}")]
+    public IActionResult GetFoto(string id)
+    {
+        var foto = _fotosContext.fotos.Where(x => x.InstituicaoId == id).FirstOrDefault();
+
+        if (foto == null)
+            return NotFound("Nenhuma foto cadastrada para esta instituição.");
+        return Ok(foto);
+    }
+
+    [HttpGet("Fotos/{id}")]
+    public IActionResult GetFotos(string id)
+    {
+        var fotos = _fotosContext.fotos.Where(x => x.InstituicaoId == id).ToList();
+
+        if (!fotos.Any())
+            return NotFound("Nenhuma foto cadastrada para esta instituição.");
+        return Ok(fotos);
+    }
+
+    [HttpPut("{id}")]
     [Authorize]
     public ActionResult Put(int id, ApplicationUser instituicao)
     {
