@@ -12,14 +12,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiDoePlus.Migrations
 {
     [DbContext(typeof(ApiDoePlusDbContext))]
-    [Migration("20221014202855_Data")]
+    [Migration("20221025191901_Data")]
     partial class Data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -40,6 +40,9 @@ namespace ApiDoePlus.Migrations
                         .HasColumnType("text");
 
                     b.Property<double>("Avaliacao")
+                        .HasColumnType("double precision");
+
+                    b.Property<double>("AvaliacaoTotal")
                         .HasColumnType("double precision");
 
                     b.Property<string>("Banco")
@@ -106,7 +109,13 @@ namespace ApiDoePlus.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<int>("QtdAvaliacoes")
+                        .HasColumnType("integer");
+
                     b.Property<string>("SecurityStamp")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Site")
                         .HasColumnType("text");
 
                     b.Property<string>("Tipo")

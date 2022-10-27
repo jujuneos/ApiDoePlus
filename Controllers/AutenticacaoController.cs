@@ -68,7 +68,10 @@ public class AutenticacaoController : ControllerBase
             PicPay = model.PicPay,
             Latitude = model.Latitude,
             Longitude = model.Longitude,
-            Avaliacao = model.Avaliacao
+            Avaliacao = model.Avaliacao,
+            AvaliacaoTotal = model.AvaliacaoTotal,
+            QtdAvaliacoes = model.QtdAvaliacoes,
+            Site = model.Site
         };
 
         var result = await _userManager.CreateAsync(ong, model.Senha);
@@ -131,7 +134,7 @@ public class AutenticacaoController : ControllerBase
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expiracao = DateTime.Now.AddHours(1);
+        var expiracao = DateTime.Now.AddYears(1);
 
         JwtSecurityToken token = new JwtSecurityToken(
             issuer: null,

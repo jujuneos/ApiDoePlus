@@ -36,7 +36,11 @@ public class CadastroInstituicaoViewModel
     [StringLength(100)]
     public string? PicPay { get; set; }
 
+    public string? Site { get; set; }
+
     public double Avaliacao { get; set; }
+    public double AvaliacaoTotal { get; set; }
+    public int QtdAvaliacoes { get; set; }
 
     [FromForm(Name = "fotos")]
     public List<IFormFile> Files { get; set; }

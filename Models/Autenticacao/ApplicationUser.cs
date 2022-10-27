@@ -26,7 +26,13 @@ public class ApplicationUser : IdentityUser
     [StringLength(100)]
     public string? PicPay { get; set; }
 
+    public string? Site { get; set; }
+
     public double Avaliacao { get; set; }
+
+    public double AvaliacaoTotal { get; set; }
+
+    public int QtdAvaliacoes { get; set; }
 
     [JsonIgnore]
     public virtual ICollection<ApplicationUser>? InstituicoesFavoritas { get; set; }
