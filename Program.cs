@@ -83,6 +83,9 @@ public class Program
             a.BaseAddress = new Uri(builder.Configuration["ServiceUri:ApiDoePlus"]);
         });
 
+        builder.Services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+        builder.Services.AddScoped<AuthenticatedUser>();
+
         var app = builder.Build();
 
         if (app.Environment.IsDevelopment())

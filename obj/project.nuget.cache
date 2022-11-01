@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2q5XdNXZdMLzcYuaSXAFsW6ulF+uYxvMucLJshU99m2ZLHO0pcXk8hDObBXlOushHQs9joxenlHhzA4D/u4mHg==",
+  "dgSpecHash": "7PIHq0n9c4mabVeotj1rqpgwgE2+u6a6aBPu69lfepgEilL5whJKMWue7g3xPMoxG2/bfoFn+o2600nyvio39w==",
   "success": true,
   "projectFilePath": "C:\\Users\\lccjunior\\Downloads\\ApiDoePlus\\ApiDoePlus\\ApiDoePlus\\ApiDoePlus.csproj",
   "expectedPackageFiles": [
@@ -10,6 +10,8 @@
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.authentication.jwtbearer\\6.0.10\\microsoft.aspnetcore.authentication.jwtbearer.6.0.10.nupkg.sha512",
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.cryptography.internal\\6.0.10\\microsoft.aspnetcore.cryptography.internal.6.0.10.nupkg.sha512",
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.cryptography.keyderivation\\6.0.10\\microsoft.aspnetcore.cryptography.keyderivation.6.0.10.nupkg.sha512",
+    "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.http.abstractions\\2.2.0\\microsoft.aspnetcore.http.abstractions.2.2.0.nupkg.sha512",
+    "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.http.features\\2.2.0\\microsoft.aspnetcore.http.features.2.2.0.nupkg.sha512",
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.identity.entityframeworkcore\\6.0.10\\microsoft.aspnetcore.identity.entityframeworkcore.6.0.10.nupkg.sha512",
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.jsonpatch\\6.0.10\\microsoft.aspnetcore.jsonpatch.6.0.10.nupkg.sha512",
     "C:\\Users\\lccjunior\\.nuget\\packages\\microsoft.aspnetcore.mvc.newtonsoftjson\\6.0.10\\microsoft.aspnetcore.mvc.newtonsoftjson.6.0.10.nupkg.sha512",

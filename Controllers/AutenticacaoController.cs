@@ -56,7 +56,7 @@ public class AutenticacaoController : ControllerBase
         var ong = new ApplicationUser
         {
             UserName = model.Nome,
-            Email = model.Email,
+            Email = model.UserName,
             Tipo = model.Tipo,
             Descricao = model.Descricao,
             PhoneNumber = model.Telefone,
@@ -111,7 +111,7 @@ public class AutenticacaoController : ControllerBase
     [Route("login")]
     public async Task<ActionResult<TokenModel>> Login([FromBody] LoginViewModel model)
     {
-        var result = await _signInManager.PasswordSignInAsync(model.Email, model.Senha, isPersistent: false, lockoutOnFailure: false);
+        var result = await _signInManager.PasswordSignInAsync(model.UserName, model.Senha, isPersistent: false, lockoutOnFailure: false);
 
         if (result.Succeeded)
             return GetTokenLogin(model);
@@ -123,6 +123,37 @@ public class AutenticacaoController : ControllerBase
     }
 
     private TokenModel GetTokenLogin(LoginViewModel model)
+    {
+        var claims = new[]
+        {
+            new Claim(JwtRegisteredClaimNames.UniqueName, model.UserName),
+            new Claim("Valor", "Valor2"),
+            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
+        };
+
+        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
+        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
+
+        var expiracao = DateTime.Now.AddHours(1);
+
+        JwtSecurityToken token = new JwtSecurityToken(
+            issuer: null,
+            audience: null,
+            claims: claims,
+            expires: expiracao,
+            signingCredentials: creds
+        );
+
+        return new TokenModel()
+        {
+            Token = new JwtSecurityTokenHandler().WriteToken(token),
+            Expiration = expiracao,
+            Authenticated = true,
+            Message = "Ok"
+        };
+    }
+
+    private TokenModel GetTokenCadastroUsuario(CadastroUsuarioViewModel model)
     {
         var claims = new[]
         {
@@ -147,36 +178,7 @@ public class AutenticacaoController : ControllerBase
         return new TokenModel()
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
-            ValidoAte = expiracao
-        };
-    }
-
-    private TokenModel GetTokenCadastroUsuario(CadastroUsuarioViewModel model)
-    {
-        var claims = new[]
-        {
-            new Claim(JwtRegisteredClaimNames.UniqueName, model.Email),
-            new Claim("Valor", "Valor2"),
-            new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
-        };
-
-        var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
-        var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
-
-        var expiracao = DateTime.Now.AddHours(1);
-
-        JwtSecurityToken token = new JwtSecurityToken(
-            issuer: null,
-            audience: null,
-            claims: claims,
-            expires: expiracao,
-            signingCredentials: creds
-        );
-
-        return new TokenModel()
-        {
-            Token = new JwtSecurityTokenHandler().WriteToken(token),
-            ValidoAte = expiracao
+            Expiration = expiracao
         };
     }
 
@@ -184,7 +186,7 @@ public class AutenticacaoController : ControllerBase
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.UniqueName, model.Email),
+            new Claim(JwtRegisteredClaimNames.UniqueName, model.UserName),
             new Claim("Valor", "Valor2"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
@@ -192,7 +194,7 @@ public class AutenticacaoController : ControllerBase
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expiracao = DateTime.Now.AddHours(1);
+        var expiracao = DateTime.Now.AddYears(1);
 
         JwtSecurityToken token = new JwtSecurityToken(
             issuer: null,
@@ -205,7 +207,7 @@ public class AutenticacaoController : ControllerBase
         return new TokenModel()
         {
             Token = new JwtSecurityTokenHandler().WriteToken(token),
-            ValidoAte = expiracao
+            Expiration = expiracao
         };
     }
 }
