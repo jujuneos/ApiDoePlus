@@ -153,3 +153,8 @@ C:\Users\lccjunior\Downloads\ApiDoePlus\ApiDoePlus\ApiDoePlus\bin\Debug\net6.0\M
 C:\Users\lccjunior\Downloads\ApiDoePlus\ApiDoePlus\ApiDoePlus\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
 C:\Users\lccjunior\Downloads\ApiDoePlus\ApiDoePlus\ApiDoePlus\bin\Debug\net6.0\Newtonsoft.Json.dll
 C:\Users\lccjunior\Downloads\ApiDoePlus\ApiDoePlus\ApiDoePlus\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+E:\doeplusapi\ApiDoePlus\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+E:\doeplusapi\ApiDoePlus\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+E:\doeplusapi\ApiDoePlus\bin\Debug\net6.0\Microsoft.Extensions.DependencyInjection.dll
+E:\doeplusapi\ApiDoePlus\bin\Debug\net6.0\Newtonsoft.Json.dll
+E:\doeplusapi\ApiDoePlus\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
