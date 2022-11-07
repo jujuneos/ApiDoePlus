@@ -18,6 +18,8 @@ public class Program
 
         string connection = builder.Configuration.GetConnectionString("DefaultConnection");
 
+        builder.Services.AddCors();
+
         builder.Services.AddDbContext<ApiDoePlusDbContext>(options =>
             options.UseNpgsql(connection));
 
@@ -36,8 +38,15 @@ public class Program
         .AddDefaultTokenProviders();
 
         // Add authentication
-        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(options =>
-
+        builder.Services.AddAuthentication(x =>
+        {
+            x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.RequireHttpsMetadata = false;
+            options.SaveToken = true;
             options.TokenValidationParameters = new TokenValidationParameters
             {
                 ValidateIssuer = false,
@@ -46,7 +55,8 @@ public class Program
                 ValidateIssuerSigningKey = true,
                 IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"])),
                 ClockSkew = TimeSpan.Zero
-            });
+            };
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddEndpointsApiExplorer();
@@ -93,6 +103,11 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
+
+        app.UseCors(x => x
+            .AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader());
 
         app.UseHttpsRedirection();
 

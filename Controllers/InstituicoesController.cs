@@ -68,7 +68,7 @@ public class InstituicoesController : ControllerBase
         return Ok(instituicao);
     }
 
-    [HttpPost("Avaliar/{id}")]
+    [HttpPost("Avaliar/{id}/{avaliacao:double}")]
     [Authorize]
     public ActionResult Avaliar(string id, double avaliacao)
     {
@@ -78,7 +78,7 @@ public class InstituicoesController : ControllerBase
             return BadRequest("Instituição não localizada.");
 
         instituicao.QtdAvaliacoes++;
-        instituicao.AvaliacaoTotal += avaliacao;
+        instituicao.AvaliacaoTotal = instituicao.AvaliacaoTotal + avaliacao;
         instituicao.Avaliacao = instituicao.AvaliacaoTotal / instituicao.QtdAvaliacoes;
 
         _context.SaveChanges();
