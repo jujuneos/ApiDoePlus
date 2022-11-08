@@ -122,6 +122,13 @@ public class AutenticacaoController : ControllerBase
         }
     }
 
+    [HttpPost("logout")]
+    public async Task<IActionResult> Logout()
+    {
+        await _signInManager.SignOutAsync();
+        return Ok();
+    }
+
     private TokenModel GetTokenLogin(LoginViewModel model)
     {
         var claims = new[]
