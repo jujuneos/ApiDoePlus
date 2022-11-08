@@ -51,6 +51,9 @@ public class UsuariosController : ControllerBase
         if (usuario.InstituicoesFavoritas == null)
             usuario.InstituicoesFavoritas = new List<ApplicationUser>();
 
+        if (usuario.InstituicoesFavoritas.Contains(instituicao))
+            return BadRequest("Instituição já está favoritada.");
+
         usuario.InstituicoesFavoritas.Add(instituicao);
 
         var result = await _user.UpdateAsync(usuario);
