@@ -134,7 +134,7 @@ public class AutenticacaoController : ControllerBase
         var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["JWT:Secret"]));
         var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
 
-        var expiracao = DateTime.Now.AddHours(1);
+        var expiracao = DateTime.Now.AddYears(1);
 
         JwtSecurityToken token = new JwtSecurityToken(
             issuer: null,

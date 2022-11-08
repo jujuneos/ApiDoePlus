@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace ApiDoePlus.Models.Autenticacao;
 
@@ -32,6 +31,5 @@ public class ApplicationUser : IdentityUser
 
     public int QtdAvaliacoes { get; set; }
 
-    [JsonIgnore]
     public virtual ICollection<ApplicationUser>? InstituicoesFavoritas { get; set; }
 }

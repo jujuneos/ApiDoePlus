@@ -2,8 +2,8 @@
 using ApiDoePlus.Models.Autenticacao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http.Abstractions;
 
 namespace ApiDoePlus.Controllers;
 
@@ -12,9 +12,9 @@ namespace ApiDoePlus.Controllers;
 public class UsuariosController : ControllerBase
 {
     private readonly ApiDoePlusDbContext _context;
-    private readonly AuthenticatedUser _user;
+    private readonly UserManager<ApplicationUser> _user;
 
-    public UsuariosController(ApiDoePlusDbContext context, AuthenticatedUser user)
+    public UsuariosController(ApiDoePlusDbContext context, UserManager<ApplicationUser> user)
     {
         _context = context;
         _user = user;
@@ -22,12 +22,9 @@ public class UsuariosController : ControllerBase
 
     [HttpGet("favoritas")]
     [Authorize]
-    public ActionResult<IEnumerable<ApplicationUser>> GetInstituicoesFavoritass(string id)
+    public ActionResult<IEnumerable<ApplicationUser>> GetInstituicoesFavoritas()
     {
-        var usuario = _context.Users.Include(u => u.InstituicoesFavoritas).FirstOrDefault(u => u.Id.Equals(id));
-
-        if (usuario == null)
-            return NotFound("Usuário não encontrado.");
+        var usuario = _context.Users.Include(u => u.InstituicoesFavoritas).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
 
         List<ApplicationUser> favoritas = usuario.InstituicoesFavoritas.ToList();
 
@@ -37,64 +34,30 @@ public class UsuariosController : ControllerBase
         return favoritas;
     }
 
-    [HttpGet("favoritar/{id}")]
+    [HttpPost("favoritar/{id}")]
     [Authorize]
-    public ActionResult Favoritar(string id)
+    public async Task<ActionResult> Favoritar(string id)
     {
         var instituicao = _context.Users.FirstOrDefault(i => i.Id.Equals(id));
 
         if (instituicao == null)
             return BadRequest("Instituição não localizada.");
 
-        var usuario = _context.Users.FirstOrDefault(u => u.Email.Equals(_user.Email));
+        var usuario = _context.Users.FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
 
         if (usuario == null)
             return BadRequest("Usuário não encontrado.");
 
-        if (usuario.InstituicoesFavoritas != null)
-            usuario.InstituicoesFavoritas.Add(instituicao);
+        if (usuario.InstituicoesFavoritas == null)
+            usuario.InstituicoesFavoritas = new List<ApplicationUser>();
 
-        _context.SaveChanges();
+        usuario.InstituicoesFavoritas.Add(instituicao);
 
-        return Ok();
-    }
+        var result = await _user.UpdateAsync(usuario);
 
-    [HttpGet("{id}", Name = "ObterUsuario")]
-    public ActionResult<ApplicationUser> Get(int id)
-    {
-        var usuario = _context.Users.FirstOrDefault(u => u.Id.Equals(id));
-
-        if (usuario == null)
-            return NotFound();
-
-        return Ok(usuario);
-    }
-
-    [HttpPut("{id}")]
-    [Authorize]
-    public ActionResult Put(int id, ApplicationUser usuario)
-    {
-        if (!id.Equals(usuario.Id))
+        if (result.Succeeded)
+            return Ok();
+        else
             return BadRequest();
-
-        _context.Entry(usuario).State = EntityState.Modified;
-        _context.SaveChanges();
-
-        return Ok(usuario);
-    }
-
-    [HttpDelete("{id}")]
-    [Authorize]
-    public ActionResult Delete(int id)
-    {
-        var usuario = _context.Users.FirstOrDefault(u => u.Id.Equals(id));
-
-        if (usuario == null)
-            return NotFound("Usuário não encontrado.");
-
-        _context.Users.Remove(usuario);
-        _context.SaveChanges();
-
-        return Ok(usuario);
     }
 }
