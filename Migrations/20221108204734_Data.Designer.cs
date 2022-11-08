@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace ApiDoePlus.Migrations
 {
     [DbContext(typeof(ApiDoePlusDbContext))]
-    [Migration("20221025191901_Data")]
+    [Migration("20221108204734_Data")]
     partial class Data
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
