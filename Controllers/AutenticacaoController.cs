@@ -38,8 +38,7 @@ public class AutenticacaoController : ControllerBase
     public async Task<ActionResult<TokenModel>> RegistrarUsuario([FromBody] CadastroUsuarioViewModel model)
     {
         var user = new ApplicationUser { 
-            UserName = model.Nome, 
-            Email = model.Email
+            UserName = model.Nome
         };
 
         var result = await _userManager.CreateAsync(user, model.Senha);
@@ -164,7 +163,7 @@ public class AutenticacaoController : ControllerBase
     {
         var claims = new[]
         {
-            new Claim(JwtRegisteredClaimNames.UniqueName, model.Email),
+            new Claim(JwtRegisteredClaimNames.UniqueName, model.Nome),
             new Claim("Valor", "Valor2"),
             new Claim(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString())
         };
