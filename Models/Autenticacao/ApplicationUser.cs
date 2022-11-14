@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 namespace ApiDoePlus.Models.Autenticacao;
 
 public class ApplicationUser : IdentityUser
-{
+{ 
     public string? Tipo { get; set; }
     [StringLength(500)]
     public string? Descricao { get; set; }

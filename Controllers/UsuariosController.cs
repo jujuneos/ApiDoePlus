@@ -22,16 +22,27 @@ public class UsuariosController : ControllerBase
 
     [HttpGet("favoritas")]
     [Authorize]
-    public ActionResult<IEnumerable<ApplicationUser>> GetInstituicoesFavoritas()
+    public ActionResult<dynamic> GetInstituicoesFavoritas()
     {
-        var usuario = _context.Users.Include(u => u.InstituicoesFavoritas).FirstOrDefault(u => u.UserName.Equals(User.Identity.Name));
+        var usuario = _context
+            .Users
+            .Where(u => u.UserName.Equals(User.Identity.Name))
+            .Include(u => u.InstituicoesFavoritas)
+            .SingleOrDefault();
 
-        List<ApplicationUser> favoritas = usuario.InstituicoesFavoritas.ToList();
+        var instituicoes = usuario
+            .InstituicoesFavoritas
+            .Select(i => new
+            {
+                id = i.Id,
+                nome = i.UserName
+            })
+            .ToList();
 
-        if (favoritas == null)
+        if (instituicoes == null)
             return NotFound("Usuário não possui instituições favoritas.");
 
-        return favoritas;
+        return instituicoes;
     }
 
     [HttpPost("favoritar/{id}")]

@@ -11,7 +11,7 @@ namespace ApiDoePlus.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class InstituicoesController : ControllerBase
+public class InstituicoesController : Controller
 {
     private readonly ApiDoePlusDbContext _context;
     
@@ -28,6 +28,56 @@ public class InstituicoesController : ControllerBase
         if (!instituicoes.Any())
             return NotFound("Nenhuma instituição cadastrada.");
         return instituicoes;
+    }
+
+    [HttpGet("marcadores")]
+    public ActionResult<IEnumerable<ApplicationUser>> GetMarcadores()
+    {
+        var instituicoes = _context
+            .Users
+            .Where(u => u.Tipo != null)
+            .Select(i => new
+            {
+                i.Id,
+                i.UserName,
+                i.Latitude,
+                i.Longitude,
+                i.Endereco,
+                i.Tipo
+            }).ToList();
+
+        if (!instituicoes.Any())
+            return NotFound("Nenhuma instituição cadastrada.");
+
+        return Json(instituicoes);
+    }
+
+    [HttpGet("dados/{id}")]
+    public ActionResult<dynamic> GetDados(string id)
+    {
+        dynamic instituicao = _context
+            .Users
+            .Select(i => new
+            {
+                i.Id,
+                i.Tipo,
+                i.Descricao,
+                i.PhoneNumber,
+                i.Site,
+                i.Avaliacao,
+                i.ChavePix,
+                i.Banco,
+                i.Agencia,
+                i.Conta,
+                i.PicPay
+            })
+            .Where(i => i.Id == id)
+            .FirstOrDefault();
+
+        if (instituicao == null)
+            return NotFound("Instituição não localizada.");
+
+        return Json(instituicao);
     }
 
     [HttpGet("Obter/{id}")]
